@@ -1288,12 +1288,18 @@ void initEditor(void) {
     signal(SIGWINCH, handleSigWinCh);
 }
 
+void _on_exit_function(void)
+{
+	printf("\e[1;1H\e[2J");
+}
+
 int main(int argc, char **argv) {
     if (argc != 2) {
         fprintf(stderr,"Usage: kilo <filename>\n");
         exit(1);
     }
 
+	atexit(_on_exit_function);
     initEditor();
     editorSelectSyntaxHighlight(argv[1]);
     editorOpen(argv[1]);
